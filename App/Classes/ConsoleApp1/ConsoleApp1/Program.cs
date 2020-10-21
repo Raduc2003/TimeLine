@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Net.Mail;
 
 namespace ConsoleApp1
 {
@@ -11,7 +13,6 @@ namespace ConsoleApp1
         public class Database
         {
             private static Database database = new Database();
-            List<object> tabel = new List<object>();
             static int i = 0;
 
             private Database()
@@ -21,16 +22,20 @@ namespace ConsoleApp1
             {
                 return database;
             }
-            public void AddEntry(object x)
+            Table[] table = new Table[200];
+         
+            public void AddEntry(Table x)
             {
-                database.tabel.Add(x);
                 i++;
+                table[i] = x;
             }
-            
 
         }
-
-        public class Users
+        public abstract class Table
+        {
+            abstract public void ReturnEntry();
+        }
+        public class Users:Table
         {
             string nume;
             int varsta;
@@ -41,14 +46,20 @@ namespace ConsoleApp1
                 sex = b;
                 varsta = c;
             }
+            public override void ReturnEntry()
+            {
+                Console.WriteLine("varsta: " + this.varsta);
+                Console.WriteLine("sex: " + this.sex);
+                Console.WriteLine("nume: " + this.nume);
+            }
         }
 
         static void Main(string[] args)
         {
-            Users Radu = new Users("asad", "asda", 3);
+            Table Radu = new Users("asad", "asda", 3);
             Database db = Database.Getdatabase();
             db.AddEntry(Radu);
-            Console.WriteLine(db);
+            Table.ReturnEntry();
         }
     }
 }
