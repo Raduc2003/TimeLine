@@ -30,6 +30,10 @@ namespace ConsoleApp1
                 table[i] = x;
             }
 
+            public string ShowEntry(int x)
+            {
+                return table[x].ToString();
+            }
         }
         public abstract class Table
         {
@@ -57,10 +61,11 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             Table Radu = new Users("asad", "asda", 3);
-            Database db;
+            Database db = Database.Getdatabase();
             // Database.AddEntry(Radu);
             Radu.ReturnEntry();
-
+            db.AddEntry(Radu);
+            Console.WriteLine(db.ShowEntry(1));
         }
 
     }
