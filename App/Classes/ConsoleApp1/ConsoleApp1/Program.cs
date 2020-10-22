@@ -30,9 +30,9 @@ namespace ConsoleApp1
                 table[i] = x;
             }
 
-            public string ShowEntry(int x)
+            public void ShowEntry(int x)
             {
-                return table[x].();
+                table[x].ReturnData();
             }
         }
         public abstract class Table
@@ -65,7 +65,7 @@ namespace ConsoleApp1
             // Database.AddEntry(Radu);
             Radu.ReturnData();
             db.AddEntry(Radu);
-            Console.WriteLine(db.ShowEntry(1));
+            db.ShowEntry(1);
         }
 
     }
