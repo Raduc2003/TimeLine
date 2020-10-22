@@ -14,7 +14,7 @@ namespace ConsoleApp1
         {
             private static Database database = new Database();
             static int i = 0;
-
+            
             private Database()
             {
             }
@@ -57,9 +57,11 @@ namespace ConsoleApp1
         static void Main(string[] args)
         {
             Table Radu = new Users("asad", "asda", 3);
-            Database db = Database.Getdatabase();
-            db.AddEntry(Radu);
-            Table.ReturnEntry();
+            Database db;
+            // Database.AddEntry(Radu);
+            Radu.ReturnEntry();
+
         }
+
     }
 }
