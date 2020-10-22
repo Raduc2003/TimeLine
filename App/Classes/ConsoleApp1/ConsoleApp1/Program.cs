@@ -32,12 +32,12 @@ namespace ConsoleApp1
 
             public string ShowEntry(int x)
             {
-                return table[x].ToString();
+                return table[x].();
             }
         }
         public abstract class Table
         {
-            abstract public void ReturnEntry();
+            abstract public void ReturnData();
         }
         public class Users:Table
         {
@@ -50,7 +50,7 @@ namespace ConsoleApp1
                 sex = b;
                 varsta = c;
             }
-            public override void ReturnEntry()
+            public override void ReturnData()
             {
                 Console.WriteLine("varsta: " + this.varsta);
                 Console.WriteLine("sex: " + this.sex);
@@ -63,7 +63,7 @@ namespace ConsoleApp1
             Table Radu = new Users("asad", "asda", 3);
             Database db = Database.Getdatabase();
             // Database.AddEntry(Radu);
-            Radu.ReturnEntry();
+            Radu.ReturnData();
             db.AddEntry(Radu);
             Console.WriteLine(db.ShowEntry(1));
         }
