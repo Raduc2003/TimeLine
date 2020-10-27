@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Net.Http.Headers;
 using System.Net.Mail;
+using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace ConsoleApp1
@@ -30,7 +31,7 @@ namespace ConsoleApp1
             {
                 i++;
                 table[i] = x;
-                x.AddId();
+                x.addToShelf(x);
 
             }
 
@@ -42,69 +43,98 @@ namespace ConsoleApp1
         }
         public abstract class Table
         {
-
+            abstract  public void addToShelf(Table x);
             abstract public void ReturnData();
-
-            abstract public void AddId();
-            abstract public void FindById(int x);
-
+            abstract public void Delete();
         }
         public class Users : Table
         {
-            int idD = 0;
+            static int idD = 0;
+            int id = 0;
             string nume;
             int varsta;
             string sex;
-            public Table[] objectshelf = new Table[100];
+            static int i = 1;
+            public static Users[] object_shelf = new Users[100];
             
             public Users(string a, string b, int c)
             {
                 nume = a;
                 sex = b;
                 varsta = c;
-            }
-            public override void AddId()
-            {
                 idD++;
+                id = idD;
             }
-            public override void FindById(int x)
+            public override void addToShelf(Table x)
             {
-
+                object_shelf[id] = (Users)x;
+                i++;
+            }
+            public  static void FindById(int x)
+            {
+                object_shelf[x].ReturnData();
+            }
+            public static void FindFirst()
+            {
+                object_shelf[1].ReturnData();
             }
             public override void ReturnData()
             {
+                Console.WriteLine(this.id);
                 Console.WriteLine("varsta: " + this.varsta);
                 Console.WriteLine("sex: " + this.sex);
                 Console.WriteLine("nume: " + this.nume);
-                Console.WriteLine(this.idD);
             }
-
-
+            public static void DeleteEntry(int x)
+            {
+                object_shelf[x] = null;
+            }
+            public override void Delete()
+            {
+                DeleteEntry(this.id);
+            }
         }
         public class TimeLineInfo : Table
         {
+            static int idD = 0;
             int id = 0;
             int durata_actiune;
             string actiune;
+            static TimeLineInfo[] object_shelf = new TimeLineInfo[100];
+            
             public TimeLineInfo(int a, string b)
             {
                 durata_actiune = a;
                 actiune = b;
+                idD++;
+                id = idD;
             }
-            public override void AddId()
+            public override void addToShelf(Table x)
             {
-                id++;
+                object_shelf[id] = (TimeLineInfo)x;
             }
-            public override void FindById(int x)
+            public static void FindById(int x)
             {
+                object_shelf[x].ReturnData();
             }
             public override void ReturnData()
             {
+                Console.WriteLine(this.id);
                 Console.WriteLine("Actiune: " + actiune);
                 Console.WriteLine("Durata actiune: " + durata_actiune);
-                Console.WriteLine(this.id);
             }
-
+            public static void FindFirst()
+            {
+                object_shelf[1].ReturnData();
+            }
+            public static void DeleteEntry(int x)
+            {
+                object_shelf[x] = null;
+            }
+            public override void Delete()
+            {
+                DeleteEntry(this.id);
+            }
         }
         static void Main(string[] args)
         {
@@ -115,14 +145,15 @@ namespace ConsoleApp1
             Table Radu3 = new Users("asd", "asd", 15);
             Table GGGG2 = new TimeLineInfo(300, "dormit");
             db.AddEntry(GGGG);
-            db.AddEntry(Radu3);
-            db.AddEntry(GGGG2);
             db.AddEntry(Radu);
+            db.AddEntry(GGGG2);
             db.AddEntry(Radu2);
-            db.ShowEntry(1);
-            db.ShowEntry(2);
-            db.ShowEntry(3);
-            db.ShowEntry(4);
+            db.AddEntry(Radu3);
+            Users.FindById(2);
+            Radu2.Delete();
+            Users.FindById(2);
+
+
         }
     }
 }
